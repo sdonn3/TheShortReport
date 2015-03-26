@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">The Short Report</string>
+    <string name="action_settings">Settings</string>
+    <string name="current_weather_button_text">Show Current Weather Info</string>
+</resources>
