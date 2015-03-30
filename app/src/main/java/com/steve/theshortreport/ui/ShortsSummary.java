@@ -1,6 +1,6 @@
-package com.steve.theshortreport;
+package com.steve.theshortreport.ui;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,31 +9,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.steve.theshortreport.R;
 import com.steve.theshortreport.common.Constants;
 import com.steve.theshortreport.common.UtilMethods;
 import com.steve.theshortreport.service.LocationTracker;
 import com.steve.theshortreport.service.response.LatLongResponse;
 import com.steve.theshortreport.service.RestClient;
 
-import java.text.DecimalFormat;
+
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class ShortsSummary extends ActionBarActivity {
+public class ShortsSummary extends BaseActivity {
 
     Button buttonGetWeatherInfo;
     LocationTracker locationTracker;
     RestClient restClient;
+    ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shorts_summary);
-
         restClient = new RestClient();
+        progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        //progress.setTitle("Loading");
+        progress.setMessage("Loading...");
 
         buttonGetWeatherInfo = (Button)findViewById(R.id.weather_info);
         buttonGetWeatherInfo.setOnClickListener(new View.OnClickListener(){
@@ -44,24 +49,22 @@ public class ShortsSummary extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected int getLayoutResource(){
+        return R.layout.activity_shorts_summary;
+    }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_shorts_summary, menu);
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -72,9 +75,14 @@ public class ShortsSummary extends ActionBarActivity {
         if (locationTracker.canGetLocation()){
             double latitude = locationTracker.getLatitude();
             double longitude = locationTracker.getLongitude();
+
+            progress.show();
             Callback callback = new Callback<LatLongResponse>() {
                 @Override
                 public void success(LatLongResponse latLongResponse, Response response) {
+
+                    progress.dismiss();
+
                     if (latLongResponse != null && latLongResponse.getMain() != null){
 
                         switch (UtilMethods.canIWearShorts(latLongResponse)){
@@ -93,6 +101,8 @@ public class ShortsSummary extends ActionBarActivity {
                         }
                     }
                     else{
+                        progress.dismiss();
+
                         Toast.makeText(getApplicationContext(), "Bad response on weather request.", Toast.LENGTH_LONG).show();
                     }
                 }
