@@ -25,8 +25,7 @@ public interface Constants {
 
     public final String[] maybeShortsPhrases = {
             "I love shorts in the colder climates, because you can wear them with chunky sweaters and jackets. It's cute and funky.\n- Rachel Bilson",
-            "I look good and that's all that matters. And when I die of hypothermia for wearing formal shorts in winter, tell them to put that on my tombstone.\n- Eliza Coupe",
-            ""
+            "I look good and that's all that matters. And when I die of hypothermia for wearing formal shorts in winter, tell them to put that on my tombstone.\n- Eliza Coupe"
     };
     public final String[] noShortsPhrases = {
             "A man should never wear shorts in the city. Flip-flops and shorts in the city are never appropriate. Shorts should only be worn on the tennis court or on the beach.\n- Tom Ford",

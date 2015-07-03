@@ -10,7 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,10 +41,14 @@ public class ShortsSummary extends ActionBarActivity {
 
     private TextView temperatureText;
     private TextView shortsText;
+    private ImageView centralImage;
 
     private Toolbar toolbar;
     private RelativeLayout borderLayout;
     private RelativeLayout innerLayout;
+
+    private Animation fadeIn;
+    private Animation fadeOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +68,16 @@ public class ShortsSummary extends ActionBarActivity {
         progress.setMessage("Loading...");
 
         temperatureText = (TextView) findViewById(R.id.temperature_info);
+        temperatureText.setVisibility(View.GONE);
         shortsText = (TextView) findViewById(R.id.shorts_text);
+        shortsText.setVisibility(View.GONE);
+        centralImage = (ImageView) findViewById(R.id.shorts_image);
+        centralImage.setVisibility(View.GONE);
 
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
 
-        getWeatherForCurrentLocation();
+        setUpButton();
     }
 
     @Override
@@ -81,9 +95,29 @@ public class ShortsSummary extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setUpButton(){
+        final Button shortsButton = (Button) findViewById(R.id.shorts_button);
+        final FadeOutAnimationListener buttonAnimationListener = new FadeOutAnimationListener(shortsButton);
+        shortsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getWeatherForCurrentLocation();
+                buttonAnimationListener.onAnimationEnd(fadeOut);
+                shortsButton.startAnimation(fadeOut);
+            }
+        });
+    }
+
+
     private void wearShorts(LatLongResponse latLongResponse){
         setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.CAN_WEAR_SHORTS));
+        temperatureText.setVisibility(View.VISIBLE);
+        temperatureText.startAnimation(fadeIn);
+        shortsText.setVisibility(View.VISIBLE);
+        shortsText.startAnimation(fadeIn);
+        centralImage.setVisibility(View.VISIBLE);
+        centralImage.startAnimation(fadeIn);
 
         ObjectAnimator.ofObject(
                 borderLayout,
@@ -116,6 +150,12 @@ public class ShortsSummary extends ActionBarActivity {
     private void maybeShorts(LatLongResponse latLongResponse){
         setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.MAYBE_WEAR_SHORTS));
+        temperatureText.setVisibility(View.VISIBLE);
+        temperatureText.startAnimation(fadeIn);
+        shortsText.setVisibility(View.VISIBLE);
+        shortsText.startAnimation(fadeIn);
+        centralImage.setVisibility(View.VISIBLE);
+        centralImage.startAnimation(fadeIn);
 
         ObjectAnimator.ofObject(
                 borderLayout,
@@ -148,6 +188,12 @@ public class ShortsSummary extends ActionBarActivity {
     private void noShorts(LatLongResponse latLongResponse){
         setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.CANNOT_WEAR_SHORTS));
+        temperatureText.setVisibility(View.VISIBLE);
+        temperatureText.startAnimation(fadeIn);
+        shortsText.setVisibility(View.VISIBLE);
+        shortsText.startAnimation(fadeIn);
+        centralImage.setVisibility(View.VISIBLE);
+        centralImage.startAnimation(fadeIn);
 
         ObjectAnimator.ofObject(
                 borderLayout,
