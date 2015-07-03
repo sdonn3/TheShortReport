@@ -3,21 +3,22 @@ package com.steve.theshortreport.common;
 import com.steve.theshortreport.service.response.*;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by steve-donnelly on 3/25/15.
  */
-public class UtilMethods {
+public class Util {
     public static int canIWearShorts(LatLongResponse latLongResponse){
 
-        double compareTemp = (latLongResponse.getMain().getTemp() + latLongResponse.getMain().getTempMax()) / 2;
+        double compareTemp = latLongResponse.getMain().getTempMax();
 
         if (compareTemp < Constants.DEFAULT_MAYBE_THRESHOLD){
             return Constants.CANNOT_WEAR_SHORTS;
         }
         else if(compareTemp < Constants.DEFAULT_YES_THRESHOLD){
             boolean rainingToday = isRainy(latLongResponse);
-            if (Constants.DEFAULT_RAIN_FACTOR && rainingToday){
+            if (Constants.DEFAULT_IS_RAIN_A_FACTOR && rainingToday){
                 return Constants.MAYBE_WEAR_SHORTS;
             }
             else if (!rainingToday) {
@@ -29,7 +30,7 @@ public class UtilMethods {
         }
         else{
             boolean rainingToday = isRainy(latLongResponse);
-            if (Constants.DEFAULT_RAIN_FACTOR && rainingToday){
+            if (Constants.DEFAULT_IS_RAIN_A_FACTOR && rainingToday){
                 return Constants.CAN_WEAR_SHORTS;
             }
             else if (!rainingToday) {
@@ -41,15 +42,26 @@ public class UtilMethods {
         }
     }
 
-    public static double convertKelvinToFahrenheit(double kelvin){
-        return kelvin * (9.0/5.0) - 459.67;
+    public static String getPhrase(int wearShortsOrNot){
+        String[] phraseSet;
+        switch (wearShortsOrNot){
+            case Constants.CAN_WEAR_SHORTS:
+                phraseSet = Constants.shortsPhrases;
+                break;
+            case Constants.MAYBE_WEAR_SHORTS:
+                phraseSet = Constants.maybeShortsPhrases;
+                break;
+            case Constants.CANNOT_WEAR_SHORTS:
+                phraseSet = Constants.noShortsPhrases;
+                break;
+            default:
+                return "";
+        }
+        Random randomGenerator = new Random();
+        return phraseSet[randomGenerator.nextInt(phraseSet.length)];
     }
 
-    public static double convertFahrenheitToKelvin(double fahrenheit){
-        return (fahrenheit + 459.67) * (5.0/9.0);
-    }
-
-    private static boolean isRainy(LatLongResponse latLongResponse){
+    public static boolean isRainy(LatLongResponse latLongResponse){
         List<Weather> weatherList = latLongResponse.getWeather();
         for (Weather w : weatherList){
             if (w.getMain().equals("Rain")){
@@ -58,14 +70,4 @@ public class UtilMethods {
         }
         return false;
     }
-
-    public static double convertKelvinToCelsius(double kelvin){
-        return kelvin - 273.15;
-    }
-
-    public static double convertCelsiusToKelvin(double celsius){
-        return celsius + 273.15;
-    }
-
-
 }

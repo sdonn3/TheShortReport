@@ -13,9 +13,9 @@ public class Sys {
     @Expose
     private String country;
     @Expose
-    private Integer sunrise;
+    private Double sunrise;
     @Expose
-    private Integer sunset;
+    private Double sunset;
 
     /**
      *
@@ -94,7 +94,7 @@ public class Sys {
      * @return
      * The sunrise
      */
-    public Integer getSunrise() {
+    public Double getSunrise() {
         return sunrise;
     }
 
@@ -103,7 +103,7 @@ public class Sys {
      * @param sunrise
      * The sunrise
      */
-    public void setSunrise(Integer sunrise) {
+    public void setSunrise(Double sunrise) {
         this.sunrise = sunrise;
     }
 
@@ -112,7 +112,7 @@ public class Sys {
      * @return
      * The sunset
      */
-    public Integer getSunset() {
+    public Double getSunset() {
         return sunset;
     }
 
@@ -121,7 +121,7 @@ public class Sys {
      * @param sunset
      * The sunset
      */
-    public void setSunset(Integer sunset) {
+    public void setSunset(Double sunset) {
         this.sunset = sunset;
     }
 
