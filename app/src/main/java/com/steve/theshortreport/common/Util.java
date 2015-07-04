@@ -12,13 +12,14 @@ public class Util {
     public static int canIWearShorts(LatLongResponse latLongResponse){
 
         double compareTemp = latLongResponse.getMain().getTempMax();
+        SettingsData settingsData = SettingsData.getSettingsData();
 
-        if (compareTemp < Constants.DEFAULT_MAYBE_THRESHOLD){
+        if (compareTemp < settingsData.getMaybeThreshold()){
             return Constants.CANNOT_WEAR_SHORTS;
         }
-        else if(compareTemp < Constants.DEFAULT_YES_THRESHOLD){
+        else if(compareTemp < settingsData.getShortsThreshold()){
             boolean rainingToday = isRainy(latLongResponse);
-            if (Constants.DEFAULT_IS_RAIN_A_FACTOR && rainingToday){
+            if (settingsData.getRainInfluence() && rainingToday){
                 return Constants.MAYBE_WEAR_SHORTS;
             }
             else if (!rainingToday) {
@@ -30,7 +31,7 @@ public class Util {
         }
         else{
             boolean rainingToday = isRainy(latLongResponse);
-            if (Constants.DEFAULT_IS_RAIN_A_FACTOR && rainingToday){
+            if (settingsData.getRainInfluence() && rainingToday){
                 return Constants.CAN_WEAR_SHORTS;
             }
             else if (!rainingToday) {
