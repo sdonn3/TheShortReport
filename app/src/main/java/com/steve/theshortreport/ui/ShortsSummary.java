@@ -33,8 +33,6 @@ import retrofit.client.Response;
 
 public class ShortsSummary extends ActionBarActivity {
 
-    private Button buttonGetWeatherInfo;
-    private LocationTracker locationTracker;
     private RestClient restClient;
     private ProgressDialog progress;
 
@@ -42,6 +40,7 @@ public class ShortsSummary extends ActionBarActivity {
     private TextView temperatureText;
     private TextView shortsText;
     private ImageView centralImage;
+    private Button shortsButton;
 
     private Toolbar toolbar;
     private RelativeLayout borderLayout;
@@ -67,6 +66,7 @@ public class ShortsSummary extends ActionBarActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
 
+        shortsButton = (Button) findViewById(R.id.shorts_button);
         temperatureText = (TextView) findViewById(R.id.temperature_info);
         temperatureText.setVisibility(View.GONE);
         shortsText = (TextView) findViewById(R.id.shorts_text);
@@ -88,26 +88,18 @@ public class ShortsSummary extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.settings_menu){
-            return true;
-        }
+        return item.getItemId() == R.id.settings_menu || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     private void setUpButton(){
-        final Button shortsButton = (Button) findViewById(R.id.shorts_button);
-        final FadeOutAnimationListener buttonAnimationListener = new FadeOutAnimationListener(shortsButton);
         shortsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getWeatherForCurrentLocation();
-                buttonAnimationListener.onAnimationEnd(fadeOut);
-                shortsButton.startAnimation(fadeOut);
             }
         });
     }
-
 
     private void wearShorts(LatLongResponse latLongResponse){
         setTemperatureText(latLongResponse);
@@ -154,6 +146,7 @@ public class ShortsSummary extends ActionBarActivity {
         temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
+        centralImage.setImageResource(R.drawable.shorts_qm);
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
 
@@ -192,6 +185,7 @@ public class ShortsSummary extends ActionBarActivity {
         temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
+        centralImage.setImageResource(R.drawable.shorts_x);
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
 
@@ -236,19 +230,22 @@ public class ShortsSummary extends ActionBarActivity {
     }
 
     private void getWeatherForCurrentLocation(){
-        locationTracker = new LocationTracker(ShortsSummary.this);
+        LocationTracker locationTracker = new LocationTracker(ShortsSummary.this);
         if (locationTracker.canGetLocation()){
             double latitude = locationTracker.getLatitude();
             double longitude = locationTracker.getLongitude();
 
             progress.show();
-            Callback callback = new Callback<LatLongResponse>() {
+            Callback<LatLongResponse> callback = new Callback<LatLongResponse>() {
                 @Override
                 public void success(LatLongResponse latLongResponse, Response response) {
 
                     progress.dismiss();
 
                     if (latLongResponse != null && latLongResponse.getMain() != null){
+                        FadeOutAnimationListener buttonAnimationListener = new FadeOutAnimationListener(shortsButton);
+                        buttonAnimationListener.onAnimationEnd(fadeOut);
+                        shortsButton.startAnimation(fadeOut);
 
                         switch (Util.canIWearShorts(latLongResponse)){
                             case Constants.CAN_WEAR_SHORTS:
