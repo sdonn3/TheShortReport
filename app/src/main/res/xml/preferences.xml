@@ -23,7 +23,7 @@
         android:title="@string/settings_rain_title">
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="rainMatters"
+            android:key="rainInfluence"
             android:title="@string/checkbox_rain_title"
             />
     </PreferenceCategory>

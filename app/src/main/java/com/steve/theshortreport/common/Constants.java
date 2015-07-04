@@ -13,7 +13,7 @@ public interface Constants {
 
     String DEFAULT_YES_THRESHOLD = "70";
     String DEFAULT_MAYBE_THRESHOLD = "65";
-    boolean DEFAULT_IS_RAIN_A_FACTOR = false;
+    boolean DEFAULT_IS_RAIN_A_FACTOR = true;
 
     String[] shortsPhrases = {
             "A simple life is good with me. I don't need a whole lot. For me, a T-shirt, a pair of shorts, barefoot on a beach and I'm happy.\n- Yanni",

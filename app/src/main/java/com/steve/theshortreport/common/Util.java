@@ -31,7 +31,7 @@ public class Util {
         }
         else{
             boolean rainingToday = isRainy(latLongResponse);
-            if (settingsData.getRainInfluence() && rainingToday){
+            if ((!settingsData.getRainInfluence()) && rainingToday){
                 return Constants.CAN_WEAR_SHORTS;
             }
             else if (!rainingToday) {

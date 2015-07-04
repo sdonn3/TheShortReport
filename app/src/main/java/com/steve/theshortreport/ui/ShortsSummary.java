@@ -57,21 +57,30 @@ public class ShortsSummary extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shorts_summary);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         SettingsData.loadSettingsData(this);
 
         restClient = new RestClient();
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
         borderLayout = (RelativeLayout) findViewById(R.id.shorts_summary);
         innerLayout = (RelativeLayout) findViewById(R.id.main_background);
+        borderLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        innerLayout.setBackgroundColor(getResources().getColor(R.color.colorWhite));
 
         progress = new ProgressDialog(this);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
 
         shortsButton = (Button) findViewById(R.id.shorts_button);
+        shortsButton.setVisibility(View.VISIBLE);
         temperatureText = (TextView) findViewById(R.id.temperature_info);
         temperatureText.setVisibility(View.GONE);
         shortsText = (TextView) findViewById(R.id.shorts_text);
@@ -118,6 +127,7 @@ public class ShortsSummary extends ActionBarActivity {
         temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
+        centralImage.setImageResource(R.drawable.shorts);
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
 

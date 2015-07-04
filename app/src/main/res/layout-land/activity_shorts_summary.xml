@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shorts_summary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".ShortsSummary">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar">
+    </include>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_background"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/colorWhite">
+        <Button
+            android:id="@+id/shorts_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shorts_button"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+        </Button>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shorts_image"
+            android:src="@drawable/shorts"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            >
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/temperature_info"
+            android:text="SampleText"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_below="@+id/shorts_image"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:id="@+id/shorts_text"
+        android:layout_alignBottom="@id/main_background"
+        android:layout_marginBottom="25dp"
+        android:text="SampleText"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        >
+    </TextView>
+
+
+</RelativeLayout>

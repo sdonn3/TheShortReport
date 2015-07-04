@@ -16,10 +16,8 @@ public class SettingsData {
     private Boolean rainInfluence;
 
     public static void loadSettingsData(Context context){
-        if (settingsData == null) {
-            settingsData = new SettingsData();
-            settingsData.loadPreferences(context);
-        }
+        settingsData = new SettingsData();
+        settingsData.loadPreferences(context);
     }
 
     public static SettingsData getSettingsData() {
