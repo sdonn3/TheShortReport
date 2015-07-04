@@ -11,8 +11,8 @@ public interface Constants {
     int MAYBE_WEAR_SHORTS = 1;
     int CANNOT_WEAR_SHORTS = 2;
 
-    double DEFAULT_YES_THRESHOLD = 70.0;
-    double DEFAULT_MAYBE_THRESHOLD = 65.0;
+    String DEFAULT_YES_THRESHOLD = "70";
+    String DEFAULT_MAYBE_THRESHOLD = "65";
     boolean DEFAULT_IS_RAIN_A_FACTOR = false;
 
     String[] shortsPhrases = {
