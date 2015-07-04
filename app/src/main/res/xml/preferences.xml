@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+    <PreferenceCategory
+        android:summary="@string/settings_temperature_summary"
+        android:title="@string/settings_temperature_title">
+        <EditTextPreference
+            android:title="Shorts threshold"
+            android:summary="What is your lowest bound threshold for wanting to wear shorts?"
+            android:inputType="number"
+            android:key="shortsThreshold"
+            />
+        <EditTextPreference
+            android:title="Maybe threshold"
+            android:summary="What is the lowest you'd even consider wearing shorts?"
+            android:inputType="number"
+            android:key="maybeThreshold"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:summary="@string/settings_rain_summary"
+        android:title="@string/settings_rain_title">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="rainMatters"
+            android:title="@string/checkbox_rain_title"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>
+

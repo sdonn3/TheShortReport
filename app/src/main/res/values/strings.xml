@@ -13,4 +13,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
+
+    <string name="settings_temperature_title">Temperature Settings</string>
+    <string name="settings_temperature_summary">Set your temperature range</string>
+    <string name="settings_rain_title">Rain</string>
+    <string name="settings_rain_summary">Set your rain settings</string>
+    <string name="checkbox_rain_title">Rain Influence</string>
 </resources>

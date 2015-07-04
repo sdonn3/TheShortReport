@@ -3,6 +3,7 @@ package com.steve.theshortreport.ui;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.steve.theshortreport.R;
 import com.steve.theshortreport.common.Constants;
+import com.steve.theshortreport.common.SettingsData;
 import com.steve.theshortreport.common.Util;
 import com.steve.theshortreport.service.LocationTracker;
 import com.steve.theshortreport.service.response.LatLongResponse;
@@ -49,10 +51,13 @@ public class ShortsSummary extends ActionBarActivity {
     private Animation fadeIn;
     private Animation fadeOut;
 
+    private SettingsData settingsData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shorts_summary);
+        SettingsData.loadSettingsData(this);
 
         restClient = new RestClient();
 
@@ -88,7 +93,12 @@ public class ShortsSummary extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return item.getItemId() == R.id.settings_menu || super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.settings_menu){
+            Intent optionsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(optionsIntent);
+            return true;
+        }
+        return false;
 
     }
 
