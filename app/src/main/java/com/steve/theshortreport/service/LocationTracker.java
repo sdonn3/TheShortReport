@@ -77,6 +77,7 @@ public class LocationTracker extends Service implements LocationListener {
                     if (location != null) {
                         latitude = location.getLatitude();
                         longitude = location.getLongitude();
+                        stopUsingLocation();
                     }
                 }
             }

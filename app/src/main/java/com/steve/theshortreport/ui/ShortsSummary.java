@@ -39,10 +39,10 @@ public class ShortsSummary extends ActionBarActivity {
     private ProgressDialog progress;
 
 
+    private TextView yesNoText;
     private TextView temperatureText;
     private TextView shortsText;
     private ImageView centralImage;
-    private Button shortsButton;
 
     private Toolbar toolbar;
     private RelativeLayout borderLayout;
@@ -79,8 +79,8 @@ public class ShortsSummary extends ActionBarActivity {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setMessage("Loading...");
 
-        shortsButton = (Button) findViewById(R.id.shorts_button);
-        shortsButton.setVisibility(View.VISIBLE);
+        yesNoText = (TextView) findViewById(R.id.yesNoAnswer);
+        yesNoText.setVisibility(View.GONE);
         temperatureText = (TextView) findViewById(R.id.temperature_info);
         temperatureText.setVisibility(View.GONE);
         shortsText = (TextView) findViewById(R.id.shorts_text);
@@ -91,7 +91,7 @@ public class ShortsSummary extends ActionBarActivity {
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         fadeIn = AnimationUtils.loadAnimation(this, R.anim.fadein);
 
-        setUpButton();
+        getWeatherForCurrentLocation();
     }
 
     @Override
@@ -111,15 +111,6 @@ public class ShortsSummary extends ActionBarActivity {
 
     }
 
-    private void setUpButton(){
-        shortsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getWeatherForCurrentLocation();
-            }
-        });
-    }
-
     private void wearShorts(LatLongResponse latLongResponse){
         setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.CAN_WEAR_SHORTS));
@@ -130,6 +121,10 @@ public class ShortsSummary extends ActionBarActivity {
         centralImage.setImageResource(R.drawable.shorts);
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
+
+        yesNoText.setText("Wear Shorts!");
+        yesNoText.setVisibility(View.VISIBLE);
+        yesNoText.startAnimation(fadeIn);
 
         ObjectAnimator.ofObject(
                 borderLayout,
@@ -170,6 +165,10 @@ public class ShortsSummary extends ActionBarActivity {
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
 
+        yesNoText.setText("Maybe?!");
+        yesNoText.setVisibility(View.VISIBLE);
+        yesNoText.startAnimation(fadeIn);
+
         ObjectAnimator.ofObject(
                 borderLayout,
                 "backgroundColor",
@@ -208,6 +207,10 @@ public class ShortsSummary extends ActionBarActivity {
         centralImage.setImageResource(R.drawable.shorts_x);
         centralImage.setVisibility(View.VISIBLE);
         centralImage.startAnimation(fadeIn);
+
+        yesNoText.setText("No shorts.");
+        yesNoText.setVisibility(View.VISIBLE);
+        yesNoText.startAnimation(fadeIn);
 
         ObjectAnimator.ofObject(
                 borderLayout,
@@ -263,10 +266,6 @@ public class ShortsSummary extends ActionBarActivity {
                     progress.dismiss();
 
                     if (latLongResponse != null && latLongResponse.getMain() != null){
-                        FadeOutAnimationListener buttonAnimationListener = new FadeOutAnimationListener(shortsButton);
-                        buttonAnimationListener.onAnimationEnd(fadeOut);
-                        shortsButton.startAnimation(fadeOut);
-
                         switch (Util.canIWearShorts(latLongResponse)){
                             case Constants.CAN_WEAR_SHORTS:
                                 wearShorts(latLongResponse);

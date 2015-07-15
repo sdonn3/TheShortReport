@@ -14,10 +14,13 @@ public class Util {
         double compareTemp = latLongResponse.getMain().getTempMax();
         SettingsData settingsData = SettingsData.getSettingsData();
 
-        if (compareTemp < settingsData.getMaybeThreshold()){
+        Double settingsYes = settingsData.getShortsThreshold() != null ? Double.valueOf(settingsData.getShortsThreshold()) : Double.valueOf(Constants.DEFAULT_YES_THRESHOLD);
+        Double settingsMaybe = settingsData.getMaybeThreshold() != null ? Double.valueOf(settingsData.getMaybeThreshold()) : Double.valueOf(Constants.DEFAULT_MAYBE_THRESHOLD);
+
+        if (compareTemp < settingsMaybe){
             return Constants.CANNOT_WEAR_SHORTS;
         }
-        else if(compareTemp < settingsData.getShortsThreshold()){
+        else if(compareTemp < settingsYes){
             boolean rainingToday = isRainy(latLongResponse);
             if (settingsData.getRainInfluence() && rainingToday){
                 return Constants.MAYBE_WEAR_SHORTS;

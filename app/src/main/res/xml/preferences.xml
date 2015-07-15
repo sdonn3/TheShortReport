@@ -3,17 +3,17 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent">
     <PreferenceCategory
-        android:summary="@string/settings_temperature_summary"
         android:title="@string/settings_temperature_title">
+        android:summary="@string/settings_temperature_summary"
         <EditTextPreference
             android:title="Shorts threshold"
-            android:summary="What is your lowest bound threshold for wanting to wear shorts?"
+            android:summary="What is the lowest temperature (F) you would wear shorts?"
             android:inputType="number"
             android:key="shortsThreshold"
             />
         <EditTextPreference
             android:title="Maybe threshold"
-            android:summary="What is the lowest you'd even consider wearing shorts?"
+            android:summary="What is the lowest temperature (F) you'd even consider wearing shorts?"
             android:inputType="number"
             android:key="maybeThreshold"
             />

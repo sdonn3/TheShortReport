@@ -51,8 +51,24 @@ public class SettingsData {
     private void loadPreferences(Context context) {
         SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        setShortsThreshold(Integer.valueOf(app_preferences.getString("shortsThreshold", Constants.DEFAULT_YES_THRESHOLD)));
-        setMaybeThreshold(Integer.valueOf(app_preferences.getString("maybeThreshold", Constants.DEFAULT_MAYBE_THRESHOLD)));
+        try{
+            setShortsThreshold(Integer.valueOf(app_preferences.getString("shortsThreshold", Constants.DEFAULT_YES_THRESHOLD)));
+        }
+        catch(NumberFormatException nfe){
+            app_preferences.edit().putString("shortsThreshold", Constants.DEFAULT_YES_THRESHOLD);
+            app_preferences.edit().apply();
+            setShortsThreshold(Integer.valueOf(Constants.DEFAULT_YES_THRESHOLD));
+        }
+
+        try{
+            setMaybeThreshold(Integer.valueOf(app_preferences.getString("maybeThreshold", Constants.DEFAULT_MAYBE_THRESHOLD)));
+        }
+        catch(NumberFormatException nfe){
+            app_preferences.edit().putString("maybeThreshold", Constants.DEFAULT_MAYBE_THRESHOLD);
+            app_preferences.edit().apply();
+            setMaybeThreshold(Integer.valueOf(Constants.DEFAULT_MAYBE_THRESHOLD));
+        }
+
         setRainInfluence(app_preferences.getBoolean("rainInfluence", Constants.DEFAULT_IS_RAIN_A_FACTOR));
     }
 }
