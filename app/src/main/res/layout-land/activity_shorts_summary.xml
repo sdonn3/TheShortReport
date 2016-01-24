@@ -39,15 +39,6 @@
             android:layout_marginTop="10dp"
             >
         </ImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/temperature_info"
-            android:text="SampleText"
-            android:textColor="@color/colorPrimaryText"
-            android:layout_below="@+id/shorts_image"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
 

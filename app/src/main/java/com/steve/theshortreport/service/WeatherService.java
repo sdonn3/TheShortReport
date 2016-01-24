@@ -11,6 +11,6 @@ import com.steve.theshortreport.service.response.*;
  */
 public interface WeatherService {
     // Get the weather based on the current location of the user
-    @GET("/weather?units=imperial")
+    @GET("/weather?units=imperial&APPID=b8b2aed9d730757b91ccaf62fb127906")
     void getWeatherByLatLong(@Query("lat") double latitude, @Query("lon") double longitude, Callback<LatLongResponse> callback);
 }

@@ -40,7 +40,6 @@ public class ShortsSummary extends ActionBarActivity {
 
 
     private TextView yesNoText;
-    private TextView temperatureText;
     private TextView shortsText;
     private ImageView centralImage;
 
@@ -81,8 +80,7 @@ public class ShortsSummary extends ActionBarActivity {
 
         yesNoText = (TextView) findViewById(R.id.yesNoAnswer);
         yesNoText.setVisibility(View.GONE);
-        temperatureText = (TextView) findViewById(R.id.temperature_info);
-        temperatureText.setVisibility(View.GONE);
+
         shortsText = (TextView) findViewById(R.id.shorts_text);
         shortsText.setVisibility(View.GONE);
         centralImage = (ImageView) findViewById(R.id.shorts_image);
@@ -112,10 +110,7 @@ public class ShortsSummary extends ActionBarActivity {
     }
 
     private void wearShorts(LatLongResponse latLongResponse){
-        setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.CAN_WEAR_SHORTS));
-        temperatureText.setVisibility(View.VISIBLE);
-        temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
         centralImage.setImageResource(R.drawable.shorts);
@@ -155,10 +150,7 @@ public class ShortsSummary extends ActionBarActivity {
     }
 
     private void maybeShorts(LatLongResponse latLongResponse){
-        setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.MAYBE_WEAR_SHORTS));
-        temperatureText.setVisibility(View.VISIBLE);
-        temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
         centralImage.setImageResource(R.drawable.shorts_qm);
@@ -198,10 +190,7 @@ public class ShortsSummary extends ActionBarActivity {
     }
 
     private void noShorts(LatLongResponse latLongResponse){
-        setTemperatureText(latLongResponse);
         shortsText.setText(Util.getPhrase(Constants.CANNOT_WEAR_SHORTS));
-        temperatureText.setVisibility(View.VISIBLE);
-        temperatureText.startAnimation(fadeIn);
         shortsText.setVisibility(View.VISIBLE);
         shortsText.startAnimation(fadeIn);
         centralImage.setImageResource(R.drawable.shorts_x);
@@ -238,18 +227,6 @@ public class ShortsSummary extends ActionBarActivity {
                 getResources().getColor(R.color.colorSecondaryNo))
                 .setDuration(2000)
                 .start();
-    }
-
-    private void setTemperatureText(LatLongResponse latLongResponse){
-        StringBuilder builder = new StringBuilder();
-        builder.append("Current: ");
-        builder.append(latLongResponse.getMain().getTemp());
-        builder.append("\nDaily Max: ");
-        builder.append(latLongResponse.getMain().getTempMax());
-        if (Util.isRainy(latLongResponse)){
-            builder.append("\nIt will rain today");
-        }
-        temperatureText.setText(builder.toString());
     }
 
     private void getWeatherForCurrentLocation(){
